@@ -1,0 +1,36 @@
+schema_version = 1
+
+[project]
+id = "chess-opening-coach"
+name = "Chess Opening Coach"
+github_repository = "ccseyhanbr/chess-opening-coach"
+default_branch = "main"
+
+[issues]
+enabled = true
+execution_label = "team:ready"
+pause_label = "team:paused"
+
+[paths]
+frontend = "public"
+backend = "src"
+tests = "test"
+
+[commands]
+setup = "npm ci"
+test = "npm test"
+build = "npm run build"
+
+[context]
+files = [
+  "README.md",
+  "SPEC.md"
+]
+
+[browser_testing]
+enabled = false
+
+[capabilities]
+docker_required = false
+database_required = false
+external_services_required = false
