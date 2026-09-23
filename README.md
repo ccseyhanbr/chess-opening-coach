@@ -13,6 +13,8 @@ See `SPEC.md` for the complete product requirements.
 ```powershell
 npm install
 npm start
+```
+
 Application:
 
 http://127.0.0.1:3000
@@ -20,3 +22,9 @@ http://127.0.0.1:3000
 Health check:
 
 http://127.0.0.1:3000/health
+
+In a separate terminal, run the automated health endpoint test with:
+
+```powershell
+npm test
+```
