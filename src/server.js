@@ -5,10 +5,21 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const publicDirectory = path.resolve(__dirname, "..", "public");
+const chessLibraryPath = path.resolve(
+  __dirname,
+  "..",
+  "node_modules",
+  "chess.js",
+  "dist",
+  "esm",
+  "chess.js"
+);
 
 export function createServer() {
   return http.createServer((request, response) => {
-    if (request.url === "/health") {
+    const requestUrl = new URL(request.url, "http://localhost");
+
+    if (requestUrl.pathname === "/health") {
       response.writeHead(200, {
         "content-type": "application/json; charset=utf-8"
       });
@@ -17,17 +28,32 @@ export function createServer() {
       return;
     }
 
-    if (request.url === "/" || request.url === "/index.html") {
-      const html = fs.readFileSync(
-        path.join(publicDirectory, "index.html"),
-        "utf8"
-      );
+    const requestedPath = requestUrl.pathname === "/"
+      ? "index.html"
+      : requestUrl.pathname.slice(1);
+    const filePath = path.resolve(publicDirectory, requestedPath);
+
+    if (filePath.startsWith(`${publicDirectory}${path.sep}`) && fs.existsSync(filePath)) {
+      const contentTypes = {
+        ".html": "text/html; charset=utf-8",
+        ".css": "text/css; charset=utf-8",
+        ".js": "text/javascript; charset=utf-8",
+        ".svg": "image/svg+xml"
+      };
 
       response.writeHead(200, {
-        "content-type": "text/html; charset=utf-8"
+        "content-type": contentTypes[path.extname(filePath)] ?? "application/octet-stream"
       });
+      fs.createReadStream(filePath).pipe(response);
+      return;
+    }
 
-      response.end(html);
+    if (requestUrl.pathname === "/vendor/chess.js" && fs.existsSync(chessLibraryPath)) {
+      response.writeHead(200, {
+        "content-type": "text/javascript; charset=utf-8",
+        "cache-control": "no-cache"
+      });
+      fs.createReadStream(chessLibraryPath).pipe(response);
       return;
     }
 

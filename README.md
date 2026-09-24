@@ -28,3 +28,11 @@ In a separate terminal, run the automated health endpoint test with:
 ```powershell
 npm test
 ```
+
+The game runs entirely in the browser after loading. Bot ratings are approximate
+experience labels, not calibrated Elo ratings. The four levels vary candidate
+breadth, search depth metadata, and controlled mistake rate; opening-book replies
+remain deterministic so learners can practice the curated lines.
+
+Legal move generation, check, checkmate, draw, castling, en passant, and
+promotion rules are provided by the mature open-source `chess.js` package.
