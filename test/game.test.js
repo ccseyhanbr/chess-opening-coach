@@ -3,6 +3,7 @@ import test from "node:test";
 import { Chess } from "../public/js/chess-engine.js";
 import { BOT_LEVELS, chooseBotMove } from "../public/js/bot.js";
 import { OPENINGS, getOpeningCoach } from "../public/js/openings.js";
+import { BotTurnController } from "../public/js/turn-controller.js";
 
 function play(game, coordinateMove) {
   const result = game.move({ from: coordinateMove.slice(0, 2), to: coordinateMove.slice(2, 4), promotion: "q" });
@@ -81,4 +82,35 @@ test("reset restores a fresh playable position", () => {
   assert.equal(game.turn(), "w");
   assert.equal(game.history().length, 0);
   assert.equal(game.moves().length, 20);
+});
+
+test("reset cancels a pending bot reply before it can alter the fresh game", () => {
+  const pending = new Map();
+  let nextTimer = 1;
+  const controller = new BotTurnController({
+    setTimer(callback) {
+      const id = nextTimer++;
+      pending.set(id, callback);
+      return id;
+    },
+    clearTimer(id) {
+      pending.delete(id);
+    }
+  });
+  const game = new Chess();
+  play(game, "e2e4");
+  controller.schedule(() => {
+    const reply = chooseBotMove(game, 900, () => 0.99);
+    game.move({ from: reply.from, to: reply.to, promotion: reply.promotion });
+  }, 350);
+  const staleCallback = [...pending.values()][0];
+
+  controller.cancel();
+  game.reset();
+  staleCallback();
+
+  assert.equal(game.turn(), "w");
+  assert.deepEqual(game.history(), []);
+  assert.equal(game.get("d2").type, "p");
+  assert.equal(game.get("e2").type, "p");
 });
