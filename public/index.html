@@ -2,87 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0c1210" />
   <title>Chess Opening Coach</title>
-
-  <style>
-    :root {
-      color-scheme: dark;
-    }
-
-    body {
-      font-family: system-ui, sans-serif;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px;
-      background: #101619;
-      color: #f9fafb;
-    }
-
-    header {
-      padding: 48px 0 24px;
-    }
-
-    main {
-      padding: 32px;
-      border: 1px solid #3d4a45;
-      border-radius: 16px;
-      background: #1a2422;
-    }
-
-    .eyebrow {
-      margin: 0 0 8px;
-      color: #d6b66a;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 0;
-      font-family: Georgia, serif;
-      font-size: clamp(2rem, 7vw, 3.5rem);
-    }
-
-    .intro {
-      max-width: 42rem;
-      color: #cbd5d1;
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    .placeholder {
-      margin: 28px 0 0;
-      padding: 20px;
-      border-left: 3px solid #d6b66a;
-      background: #15201e;
-    }
-  </style>
+  <link rel="stylesheet" href="/styles.css" />
+  <script type="importmap">
+    { "imports": { "chess.js": "/vendor/chess.js" } }
+  </script>
 </head>
-
 <body>
-  <header>
-    <p class="eyebrow">Learn one move at a time</p>
-    <h1>Chess Opening Coach</h1>
+  <header class="site-header">
+    <div class="brand-mark" aria-hidden="true">♞</div>
+    <div><p class="eyebrow">Guided practice</p><h1>Opening <span>Coach</span></h1></div>
+    <div class="header-status"><span></span> Local game</div>
   </header>
-
-  <main>
-    <p class="intro">
-      Build confidence in the opening with guided games and practical
-      strategic ideas.
-    </p>
-
-    <section class="placeholder" aria-labelledby="game-heading">
-      <h2 id="game-heading">Your next game is being prepared</h2>
-      <p>
-        The board, opening guidance, and computer opponents will appear here
-        as the coach develops.
-      </p>
+  <main class="game-layout">
+    <section class="board-column" aria-labelledby="game-status">
+      <div class="game-toolbar">
+        <div><p class="eyebrow">Your game</p><h2 id="game-status" aria-live="polite">White to move</h2></div>
+        <div class="controls">
+          <label for="bot-level">Opponent</label>
+          <select id="bot-level"><option value="600">≈ 600 · Casual</option><option value="900" selected>≈ 900 · Developing</option><option value="1200">≈ 1200 · Club</option><option value="1500">≈ 1500 · Challenging</option></select>
+          <button id="new-game" type="button"><span aria-hidden="true">↻</span> New game</button>
+        </div>
+      </div>
+      <div class="board-shell">
+        <div class="player-row opponent"><div class="avatar">♟</div><div><strong>Coach Bot</strong><small id="opponent-level">Approx. 900 strength</small></div><span id="bot-thinking" class="thinking" hidden>Thinking…</span></div>
+        <div id="board" class="chess-board" role="grid" aria-label="Interactive chess board"></div>
+        <div class="player-row"><div class="avatar light">♙</div><div><strong>You</strong><small>White pieces</small></div><span class="turn-dot" id="turn-dot" aria-label="Your turn"></span></div>
+      </div>
+      <p id="move-message" class="move-message" aria-live="assertive">Select a piece, then choose a highlighted square.</p>
     </section>
+    <aside class="coach-column">
+      <section class="panel coach-panel">
+        <div class="panel-heading"><div><p class="eyebrow">Live guidance</p><h2>Opening coach</h2></div><span id="book-status" class="book-status">In book</span></div>
+        <div class="opening-card"><p class="field-label">Current opening</p><h3 id="opening-name">Opening book</h3><p id="opening-description">Play a first move to begin exploring one of ten curated opening lines.</p></div>
+        <div class="recommendation"><div class="move-badge" id="recommended-move">e4</div><div><p class="field-label">Recommended move</p><p id="strategic-idea">Claim the center and free the king's bishop.</p></div></div>
+      </section>
+      <section class="panel history-panel">
+        <div class="panel-heading"><div><p class="eyebrow">Game record</p><h2>Move history</h2></div><span id="move-count">0 moves</span></div>
+        <ol id="move-history" class="move-history"><li class="empty-history">Your moves will appear here.</li></ol>
+      </section>
+      <div class="tip"><span aria-hidden="true">✦</span><p><strong>Coach's note</strong> Recommendations follow the position you actually play and are always checked for legality.</p></div>
+    </aside>
   </main>
+  <footer><span>10 opening lines</span><span>Runs entirely on your device</span><span>Approximate bot strengths</span></footer>
+  <script type="module" src="/js/app.js"></script>
 </body>
 </html>

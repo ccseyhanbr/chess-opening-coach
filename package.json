@@ -4,10 +4,14 @@
   "private": true,
   "description": "A small chess web app for learning openings and playing bots at different strength levels.",
   "type": "module",
+  "dependencies": {
+    "chess.js": "1.4.0"
+  },
   "scripts": {
     "start": "node src/server.js",
     "dev": "node src/server.js",
-    "build": "node --check src/server.js",
+    "build": "node --check src/server.js && node --check public/js/chess-engine.js && node --check public/js/openings.js && node --check public/js/bot.js && node --check public/js/turn-controller.js && node --check public/js/app.js",
+    "lint": "npm run build",
     "test": "node --test --test-isolation=none"
   },
   "engines": {
