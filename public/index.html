@@ -34,6 +34,14 @@
       <p id="move-message" class="move-message" aria-live="assertive">Select a piece, then choose a highlighted square.</p>
     </section>
     <aside class="coach-column">
+      <section class="panel clocks-panel" aria-labelledby="clocks-heading">
+        <div class="panel-heading"><div><p class="eyebrow">Elapsed time</p><h2 id="clocks-heading">Game clocks</h2></div></div>
+        <div class="clocks">
+          <div class="clock" data-side="white"><span class="field-label">White</span><span class="clock-time" id="clock-white">00:00</span></div>
+          <div class="clock" data-side="black"><span class="field-label">Black</span><span class="clock-time" id="clock-black">00:00</span></div>
+          <div class="clock total" data-side="total"><span class="field-label">Total</span><span class="clock-time" id="clock-total">00:00</span></div>
+        </div>
+      </section>
       <section class="panel coach-panel">
         <div class="panel-heading"><div><p class="eyebrow">Live guidance</p><h2>Opening coach</h2></div><span id="book-status" class="book-status">In book</span></div>
         <div class="opening-card"><p class="field-label">Current opening</p><h3 id="opening-name">Opening book</h3><p id="opening-description">Play a first move to begin exploring one of ten curated opening lines.</p></div>
