@@ -59,7 +59,7 @@ test("rules detect checkmate and game over", () => {
 });
 
 test("each approximate bot level has a legal move and progressively stronger configuration", () => {
-  const levels = [600, 900, 1200, 1500];
+  const levels = [500, 600, 900, 1200, 1500, 2300];
   const game = new Chess();
   play(game, "a2a3");
   for (const level of levels) {
@@ -71,7 +71,7 @@ test("each approximate bot level has a legal move and progressively stronger con
     const stronger = BOT_LEVELS[levels[index]];
     assert.ok(stronger.depth >= weaker.depth);
     assert.ok(stronger.candidateBreadth > weaker.candidateBreadth);
-    assert.ok(stronger.mistakeRate < weaker.mistakeRate);
+    assert.ok(stronger.mistakeRate <= weaker.mistakeRate);
   }
 });
 

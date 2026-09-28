@@ -1,10 +1,12 @@
 import { openingBookMove } from "./openings.js";
 
 export const BOT_LEVELS = {
+  500: { depth: 1, candidateBreadth: 1, mistakeRate: 0.75, label: "Beginner" },
   600: { depth: 1, candidateBreadth: 2, mistakeRate: 0.5, label: "Casual" },
   900: { depth: 1, candidateBreadth: 4, mistakeRate: 0.25, label: "Developing" },
   1200: { depth: 2, candidateBreadth: 8, mistakeRate: 0.08, label: "Club" },
-  1500: { depth: 3, candidateBreadth: 12, mistakeRate: 0, label: "Challenging" }
+  1500: { depth: 3, candidateBreadth: 12, mistakeRate: 0, label: "Challenging" },
+  2300: { depth: 4, candidateBreadth: 20, mistakeRate: 0, label: "Expert" }
 };
 
 const VALUES = { p: 100, n: 320, b: 330, r: 500, q: 900, k: 20000 };
