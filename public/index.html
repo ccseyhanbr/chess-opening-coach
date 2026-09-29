@@ -6,12 +6,8 @@
   <meta name="theme-color" content="#0c1210" />
   <title>Chess Opening Coach</title>
   <link rel="stylesheet" href="/styles.css" />
-  <style>
-    .chess-board[data-theme="ocean"] .square.light { background: #b8d8dc; }
-    .chess-board[data-theme="ocean"] .square.dark { background: #34717a; }
-    .chess-board[data-theme="plum"] .square.light { background: #e0c6d9; }
-    .chess-board[data-theme="plum"] .square.dark { background: #704866; }
-  </style>
+  <link rel="stylesheet" href="/styles-3d.css" />
+  <link rel="stylesheet" href="/styles-webgl.css" />
   <script type="importmap">
     { "imports": { "chess.js": "/vendor/chess.js" } }
   </script>
@@ -28,15 +24,15 @@
         <div><p class="eyebrow">Your game</p><h2 id="game-status" aria-live="polite">White to move</h2></div>
         <div class="controls">
           <label for="bot-level">Opponent</label>
-          <select id="bot-level"><option value="500">≈ 500 · Beginner</option><option value="600">≈ 600 · Casual</option><option value="900" selected>≈ 900 · Developing</option><option value="1200">≈ 1200 · Club</option><option value="1500">≈ 1500 · Challenging</option><option value="2300">≈ 2300 · Expert</option></select>
-          <label for="board-theme">Board</label>
-          <select id="board-theme" aria-label="Board theme"><option value="classic">Classic</option><option value="ocean">Ocean</option><option value="plum">Plum</option></select>
+          <select id="bot-level"><option value="600">≈ 600 · Casual</option><option value="900" selected>≈ 900 · Developing</option><option value="1200">≈ 1200 · Club</option><option value="1500">≈ 1500 · Challenging</option></select>
+          <button id="view-toggle" type="button" aria-pressed="false">3D view</button>
           <button id="new-game" type="button"><span aria-hidden="true">↻</span> New game</button>
         </div>
       </div>
       <div class="board-shell">
         <div class="player-row opponent"><div class="avatar">♟</div><div><strong>Coach Bot</strong><small id="opponent-level">Approx. 900 strength</small></div><span id="bot-thinking" class="thinking" hidden>Thinking…</span></div>
         <div id="board" class="chess-board" role="grid" aria-label="Interactive chess board"></div>
+        <div id="board-3d" class="chess-board-3d" role="application" aria-label="3D interactive chess board" hidden></div>
         <div class="player-row"><div class="avatar light">♙</div><div><strong>You</strong><small>White pieces</small></div><span class="turn-dot" id="turn-dot" aria-label="Your turn"></span></div>
       </div>
       <p id="move-message" class="move-message" aria-live="assertive">Select a piece, then choose a highlighted square.</p>
